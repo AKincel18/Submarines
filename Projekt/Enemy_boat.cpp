@@ -34,12 +34,12 @@ void Enemy_boat<typ>::movement()
 {
 	for (vector <typ>::iterator it = vec.begin(); it != vec.end(); it++)
 	{
-		if (it->xe1 + 5 >= back) //zawracanie-> plyn w lewo
+		if (it->xe1 + 5 >= back) //turning back -> go to the left
 		{
 			it->xe1 -= 10;
 			it->dir = 1;
 		}
-		else if (it->xe1 <= 0) //zawracanie-> plyn w prawo
+		else if (it->xe1 <= 0) // turning back->go to the right
 		{
 			it->xe1 += 10;
 			it->dir = 0;
@@ -71,7 +71,7 @@ void Enemy_boat<typ>::set_hit()
 	hit = max;
 }
 template <class typ>
-void Enemy_boat<typ>::collision(vector <coords> bU, MainBoat *mb) //bomba usera, a enemy
+void Enemy_boat<typ>::collision(vector <coords> bU, MainBoat *mb)
 {
 	set_hit();
 	movement();
@@ -81,7 +81,7 @@ void Enemy_boat<typ>::collision(vector <coords> bU, MainBoat *mb) //bomba usera,
 		{
 			if ((vec[it].xe1 <= bU[i].xB + 18 && vec[it].xe1 + length >= bU[i].xB) && bU[i].yB + 30 >= vec[it].ye1  && bU[i].yB + 30 <= vec[it].ye1 + 40)
 			{
-				//trafiony
+				//hit
 				hit = i;
 				if (class_name == "class Enemy1")
 					mb->add_points(10);
@@ -147,11 +147,11 @@ void Enemy_boat<typ>::add_bomb()
 	}
 }
 template <class typ>
-bool Enemy_boat<typ>::movement_bomb()//int xU)
+bool Enemy_boat<typ>::movement_bomb()
 {
 	for (int it = 0; it < enemy_bombs_coords.size(); it++)
 	{
-		if (enemy_bombs_coords[it].y < 150) //jesli w 'brzeg'
+		if (enemy_bombs_coords[it].y < 150)
 		{
 			enemy_bombs_coords.erase(enemy_bombs_coords.begin() + it);
 		}
@@ -169,7 +169,7 @@ void Enemy_boat<typ>::show_bombs()
 	for (vector <enemy_bomb_coords>::iterator it = enemy_bombs_coords.begin(); it != enemy_bombs_coords.end(); it++)
 	{
 		al_draw_bitmap(b, it->x, it->y, 0);
-		al_convert_mask_to_alpha(b, al_map_rgb(0, 0, 255));//przezroczyste tlo bomby
+		al_convert_mask_to_alpha(b, al_map_rgb(0, 0, 255));
 	}
 }
 template <class typ>

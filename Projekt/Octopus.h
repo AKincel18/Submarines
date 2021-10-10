@@ -7,13 +7,13 @@ class Octopus : public GameObject
 {
 	ALLEGRO_BITMAP *octopus = al_load_bitmap("octopus.png");
 	ALLEGRO_BITMAP *bottle = al_load_bitmap("bottle.png");
-	bool wyrzucono = false;
-	bool trafiony = false;
+	bool is_throw_away_bottle = false;
+	bool is_hit_octopus = false;
 public:
 	void show();
 	void movement_bottle();
-	void now();
-	void trafiono();
+	void throw_away_bottle();
+	void hit_optocus();
 	void show_bottle();
 	void reset();
 };

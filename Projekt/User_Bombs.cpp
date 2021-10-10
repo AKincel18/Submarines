@@ -8,31 +8,31 @@ User_Bombs::User_Bombs()
 }
 void User_Bombs::add(MainBoat *mb)
 {
-	if (vec.size() < 10) //jesli dostepne bomby to dodaj do wektora
+	if (user_bombs_coords.size() < 10) //add bomb to vector is possible
 	{
-		wsp w;
-		w.xB = mb->getX() + 55; // poprawka zeby walil bomby spod okretu
-		w.yB = mb->getY() + 40;	//jw
-		vec.push_back(w);
-		mb->subPOINTS();
+		coords w;
+		w.xB = mb->getX() + 55; //shot bomb from bottom of boat
+		w.yB = mb->getY() + 40;
+		user_bombs_coords.push_back(w);
+		mb->sub_point();
 	}
 }
 void User_Bombs::movement()
 {
-	for (int it = 0; it < vec.size(); it++)
+	for (int it = 0; it < user_bombs_coords.size(); it++)
 	{
-		if (vec[it].yB > 760) //jesli w dno to usuwaj
+		if (user_bombs_coords[it].yB > 760) //remove bomb
 		{
-			vec.erase(vec.begin() + it);
+			user_bombs_coords.erase(user_bombs_coords.begin() + it);
 		}
 		else
-			vec[it].yB += 10; // bomba spada
+			user_bombs_coords[it].yB += 10; //bomb is falling
 
 	}
 }
 void User_Bombs::show()
 {
-	for (vector <wsp>::iterator it = vec.begin(); it != vec.end(); it++)
+	for (vector <coords>::iterator it = user_bombs_coords.begin(); it != user_bombs_coords.end(); it++)
 	{
 		{
 			al_draw_bitmap(bomb, it->xB, it->yB, 0);
@@ -41,26 +41,26 @@ void User_Bombs::show()
 }
 void User_Bombs::left()
 {
-	first = 1375;
-	for (int i = 0; i < max - vec.size(); i++)
+	first_life = 1375;
+	for (int i = 0; i < max - user_bombs_coords.size(); i++)
 	{
-		al_draw_bitmap(bomb, first, 0, 0);
-		first -= 20;
+		al_draw_bitmap(bomb, first_life, 0, 0);
+		first_life -= 20;
 	}
 }
 
-vector <GameObject::wsp> User_Bombs::getV()
+vector <GameObject::coords> User_Bombs::getV()
 {
-	return vec;
+	return user_bombs_coords;
 }
-void User_Bombs::usun(int ktory)
+void User_Bombs::remove(int bomb_number)
 {
-	if (ktory < max && vec.size() != 0)
+	if (bomb_number < max && user_bombs_coords.size() != 0 && user_bombs_coords.size() > bomb_number)
 	{
-		vec.erase(vec.begin() + ktory);
+		user_bombs_coords.erase(user_bombs_coords.begin() + bomb_number);
 	}
 }
 void User_Bombs::reset()
 {
-	vec.clear();
+	user_bombs_coords.clear();
 }

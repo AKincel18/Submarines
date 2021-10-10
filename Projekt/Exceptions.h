@@ -3,5 +3,5 @@
 class Exceptions
 {
 public:
-	bool check();
+	bool check_init_allegro();
 };

@@ -14,25 +14,16 @@
 #include "Exceptions.h"
 #include "Game.h"
 
-
-
 using namespace std;
 int main()
 {
 	srand(time(NULL));
-	cout << "WCHODZI" << endl;
 	Exceptions e;
-	if (e.check() == false)
+	if (e.check_init_allegro() == false)
 	{
 		cout << "ALLEGRO ERROR" << endl;
 		exit(EXIT_FAILURE);
-	}
-	
-	Game g;
-	
-	g.NEWGAME();
-	return 0;
-
-
-	
+	}	
+	Game g; //start the game
+	return 0;	
 }

@@ -11,6 +11,5 @@ void Enemy2::create()
 	{
 		Enemy2 *e = new Enemy2();
 		vec.push_back(*e);
-
 	}
 }

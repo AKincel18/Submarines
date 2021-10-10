@@ -14,26 +14,29 @@ void MainBoat::set(int xx, int yy)
 void MainBoat::show()
 {
 
-	if (key[0] == true) //w lewo
+	if (key[0] == true) //left
 		al_draw_tinted_bitmap(boat, al_map_rgb(153, 217, 234), x, y, 0);
-	else  // w prawo
+	else  //right
 		al_draw_tinted_bitmap(boat, al_map_rgb(153, 217, 234), x, y, 1);
 }
-void MainBoat::show_Dead()
+
+void MainBoat::show_dead()
 {
 	if (key[0] == true)
-		al_draw_tinted_bitmap(boat2, al_map_rgb(153, 217, 234), x, y, 0);
+		al_draw_tinted_bitmap(dead_boat, al_map_rgb(153, 217, 234), x, y, 0);
 	else
-		al_draw_tinted_bitmap(boat2, al_map_rgb(153, 217, 234), x, y, 1);
+		al_draw_tinted_bitmap(dead_boat, al_map_rgb(153, 217, 234), x, y, 1);
 
 }
+
 void MainBoat::movement()
 {
-	if (key[0] == true && x>8) //w lewo
+	if (key[0] == true && x > 8) //left
 		x = x - 10 * move_level;
-	if (key[1] == true && x<1255) // w prawo
+	if (key[1] == true && x < 1255) // right
 		x = x + 10 * move_level;
 }
+
 void MainBoat::life()
 {
 	int first = 0;
@@ -43,54 +46,63 @@ void MainBoat::life()
 		first += 165;
 	}
 }
+
 int MainBoat::getX()
 {
 	return x;
 }
+
 int MainBoat::getY()
 {
 	return y;
 }
+
 void MainBoat::add_life()
 {
-	if (!dodano)
+	if (!added)
 	{
 		lifes++;
-		dodano = true;
+		added = true;
 	}
 }
+
 int MainBoat::getLife()
 {
 	return lifes;
 }
-void MainBoat::utrata_zycia()
+
+void MainBoat::lost_life()
 {
 	lifes--;
 }
-bool MainBoat::GAMEOVER()
+
+bool MainBoat::game_over()
 {
 	if (lifes == 0)
 		return true;
 	else
 		return false;
 }
-void MainBoat::reset_NEW()
+
+void MainBoat::reset_new()
 {
 	lifes = 3;
-	resetPOINTS();
-	dodano = false;
+	reset_points();
+	added = false;
 }
+
 void MainBoat::reset_bottle_and_move()
 {
-	dodano = false;
+	added = false;
 	move_level = 0;
-	key[0] = true; key[1] = false;//lewy, prawy
+	key[0] = true; key[1] = false;
 }
+
 void MainBoat::move(bool dir)
 {
 	switch (dir)
 	{
-	case 0://lewo
+	case 0://left
 		if (key[0] == true)
 		{
 			if (move_level < 3)
@@ -100,7 +112,7 @@ void MainBoat::move(bool dir)
 			move_level = 1;
 		key[0] = true; key[1] = false;
 		break;
-	case 1: //prawo
+	case 1: //right
 		if (key[1] == true)
 		{
 			if (move_level < 3)

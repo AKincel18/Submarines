@@ -4,52 +4,51 @@
 using namespace std;
 GameObject::GameObject() {}
 
-bool GameObject::CheckCollision()
+bool GameObject::check_collision()
 {
-	for (int it = 0; it < vec.size(); it++)
+	for (int it = 0; it < user_bombs_coords.size(); it++)
 	{
-		if ((xO + 25 <= vec[it].xB + 18 && xO + 75 >= vec[it].xB) && (vec[it].yB + 30 >= yO))
+		if ((xO + 25 <= user_bombs_coords[it].xB + 18 && xO + 75 >= user_bombs_coords[it].xB) && (user_bombs_coords[it].yB + 30 >= yO))
 		{
-			vec.erase(vec.begin() + it);
+			user_bombs_coords.erase(user_bombs_coords.begin() + it);
 			return true;
 		}
 	}
 	return false;
 }
-bool GameObject::Dead(int xU)
+bool GameObject::is_dead(int xU)
 {
 
-	for (vector<wsp2>::iterator it = w.begin(); it != w.end(); it++)
+	for (vector<enemy_bomb_coords>::iterator it = enemy_bombs_coords.begin(); it != enemy_bombs_coords.end(); it++)
 	{
 		if (it->x >= xU && it->x <= xU + 145 && it->y <= 143)
 		{
-			//w.erase(w.begin() + it); //nie jest konieczne bo i tak wszystko od nowa
 			return true;
 		}
 	}
 	return false;
 
 }
-bool GameObject::NewLife(int xU)
+bool GameObject::new_life(int xU)
 {
 	if ((xO - 20 >= xU && xO <= xU + 145 && yBottle <= 145 && yBottle >= 130))
 		return true;
 	else
 		return false;
 }
-int GameObject::getPOINTS()
+int GameObject::get_points()
 {
-	return POINTS;
+	return points;
 }
-void GameObject::resetPOINTS()
+void GameObject::reset_points()
 {
-	POINTS = 0;
+	points = 0;
 }
-void GameObject::addPOINTS(int ile)
+void GameObject::add_points(int _points)
 {
-	POINTS += ile;
+	points += _points;
 }
-void GameObject::subPOINTS()
+void GameObject::sub_point()
 {
-	POINTS--;
+	points--;
 }

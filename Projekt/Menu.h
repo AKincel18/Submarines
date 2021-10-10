@@ -8,10 +8,10 @@
 #include <allegro5/allegro_primitives.h> 
 class Menu
 {
-	ALLEGRO_TIMER *timerTIME = al_create_timer(1.0 / 1); //odmierzacz czasu
+	ALLEGRO_TIMER *timer = al_create_timer(1.0 / 1); //timer
 	ALLEGRO_EVENT_QUEUE *event_queue2 = al_create_event_queue();
-	float SCREEN_W = 1400 //szerokosc ekranu
-		, SCREEN_H = 800; //wysokosc
+	float SCREEN_W = 1400 //screen width
+		, SCREEN_H = 800; //screen height
 	ALLEGRO_FONT *font = al_load_font("4mini.ttf", 50, 0);
 	ALLEGRO_EVENT ev3;
 public:

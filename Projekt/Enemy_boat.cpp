@@ -13,20 +13,20 @@ Enemy_boat<typ>::Enemy_boat(int xx, int yy)
 	y = yy;
 }
 template <class typ>
-void Enemy_boat<typ>::kalibracja()
+void Enemy_boat<typ>::calibrate()
 {
 	if (class_name == "class Enemy1")
 	{
-		zawroc = 1265; dlugosc = 135; kalibruj = 55;
+		back = 1265; length = 135; calibration = 55;
 	}
 	else if (class_name == "class Enemy2")
 	{
-		zawroc = 1200; dlugosc = 200; kalibruj = 90;
+		back = 1200; length = 200; calibration = 90;
 	}
 
 	else if (class_name == "class Enemy3")
 	{
-		zawroc = 1175; dlugosc = 225; kalibruj = 102;
+		back = 1175; length = 225; calibration = 102;
 	}
 }
 template <class typ>
@@ -34,7 +34,7 @@ void Enemy_boat<typ>::movement()
 {
 	for (vector <typ>::iterator it = vec.begin(); it != vec.end(); it++)
 	{
-		if (it->xe1 + 5 >= zawroc) //zawracanie-> plyn w lewo
+		if (it->xe1 + 5 >= back) //zawracanie-> plyn w lewo
 		{
 			it->xe1 -= 10;
 			it->dir = 1;
@@ -71,7 +71,7 @@ void Enemy_boat<typ>::set_hit()
 	hit = max;
 }
 template <class typ>
-void Enemy_boat<typ>::collision(vector <wsp> bU, MainBoat *mb) //bomba usera, a enemy
+void Enemy_boat<typ>::collision(vector <coords> bU, MainBoat *mb) //bomba usera, a enemy
 {
 	set_hit();
 	movement();
@@ -79,16 +79,16 @@ void Enemy_boat<typ>::collision(vector <wsp> bU, MainBoat *mb) //bomba usera, a 
 	{
 		for (int i = 0; i < bU.size(); i++)
 		{
-			if ((vec[it].xe1 <= bU[i].xB + 18 && vec[it].xe1 + dlugosc >= bU[i].xB) && bU[i].yB + 30 >= vec[it].ye1  && bU[i].yB + 30 <= vec[it].ye1 + 40)
+			if ((vec[it].xe1 <= bU[i].xB + 18 && vec[it].xe1 + length >= bU[i].xB) && bU[i].yB + 30 >= vec[it].ye1  && bU[i].yB + 30 <= vec[it].ye1 + 40)
 			{
 				//trafiony
 				hit = i;
 				if (class_name == "class Enemy1")
-					mb->addPOINTS(10);
+					mb->add_points(10);
 				else if (class_name == "class Enemy2")
-					mb->addPOINTS(20);
+					mb->add_points(20);
 				else if (class_name == "class Enemy3")
-					mb->addPOINTS(50);
+					mb->add_points(50);
 
 				vec.erase(vec.begin() + it);
 
@@ -137,27 +137,27 @@ void Enemy_boat<typ>::add_bomb()
 {
 	if (vec.size() != 0)
 	{
-		wsp2 pom;
+		enemy_bomb_coords pom;
 		for (vector <typ>::iterator it = vec.begin(); it != vec.end(); it++)
 		{
-			pom.x = it->xe1 + kalibruj;
+			pom.x = it->xe1 + calibration;
 			pom.y = it->ye1;
-			w.push_back(pom);
+			enemy_bombs_coords.push_back(pom);
 		}
 	}
 }
 template <class typ>
 bool Enemy_boat<typ>::movement_bomb()//int xU)
 {
-	for (int it = 0; it < w.size(); it++)
+	for (int it = 0; it < enemy_bombs_coords.size(); it++)
 	{
-		if (w[it].y < 150) //jesli w 'brzeg'
+		if (enemy_bombs_coords[it].y < 150) //jesli w 'brzeg'
 		{
-			w.erase(w.begin() + it);
+			enemy_bombs_coords.erase(enemy_bombs_coords.begin() + it);
 		}
 		else
 		{
-			w[it].y -= 10;
+			enemy_bombs_coords[it].y -= 10;
 		}
 	}
 	return false;
@@ -166,7 +166,7 @@ bool Enemy_boat<typ>::movement_bomb()//int xU)
 template <class typ>
 void Enemy_boat<typ>::show_bombs()
 {
-	for (vector <wsp2>::iterator it = w.begin(); it != w.end(); it++)
+	for (vector <enemy_bomb_coords>::iterator it = enemy_bombs_coords.begin(); it != enemy_bombs_coords.end(); it++)
 	{
 		al_draw_bitmap(b, it->x, it->y, 0);
 		al_convert_mask_to_alpha(b, al_map_rgb(0, 0, 255));//przezroczyste tlo bomby
@@ -183,21 +183,26 @@ void Enemy_boat<typ>::set_hit_main()
 	hit_main = max;
 }
 template <class typ>
-void Enemy_boat<typ>::remove(vector <wsp> bU, MainBoat *mb)
+void Enemy_boat<typ>::remove(vector <coords> bomb_user_coords, MainBoat *main_boat)
 {
 	set_hit_main();
-	for (int it = 0; it < w.size(); it++)
+	for (int it = 0; it < enemy_bombs_coords.size(); it++)
 	{
-		for (int it2 = 0; it2 < bU.size(); it2++)
+		for (int it2 = 0; it2 < bomb_user_coords.size(); it2++)
 		{
-			if (bU[it2].xB + 18 >= w[it].x && bU[it2].xB <= w[it].x + 20 && bU[it2].yB + 30 >= w[it].y  && bU[it2].yB + 30 <= w[it].y + 20)
+			if (bomb_user_coords[it2].xB + 18 >= enemy_bombs_coords[it].x && bomb_user_coords[it2].xB <= enemy_bombs_coords[it].x + 20 && 
+				bomb_user_coords[it2].yB + 30 >= enemy_bombs_coords[it].y  && bomb_user_coords[it2].yB + 30 <= enemy_bombs_coords[it].y + 20)
 			{
-				w.erase(w.begin() + it);
+				enemy_bombs_coords.erase(enemy_bombs_coords.begin() + it);
 				it--;
 
-				mb->addPOINTS(5);
+
+				main_boat->add_points(5);
 				hit_main = it2;
-				//return it2;
+				if (it < 0)
+				{
+					break;
+				}
 
 			}
 		}
@@ -205,9 +210,9 @@ void Enemy_boat<typ>::remove(vector <wsp> bU, MainBoat *mb)
 
 }
 template <class typ>
-bool Enemy_boat<typ>::NextLevel()
+bool Enemy_boat<typ>::next_level()
 {
-	if (w.empty() && vec.empty())
+	if (enemy_bombs_coords.empty() && vec.empty())
 		return true;
 	else
 		return false;
@@ -217,6 +222,6 @@ template <class typ>
 void Enemy_boat<typ>::reset()
 {
 	vec.clear();
-	w.clear();
+	enemy_bombs_coords.clear();
 	
 }

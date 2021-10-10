@@ -11,14 +11,14 @@
 class User_Bombs :public GameObject
 {
 	ALLEGRO_BITMAP *bomb = al_load_bitmap("bomb.png");
-	int first = 1375; //ustawienie 'zyc'		
+	int first_life = 1375; //set lifes		
 public:
 	User_Bombs();
 	void add(MainBoat *mb);
 	void movement();
 	void show();
 	void left();
-	std::vector <wsp> getV();
-	void usun(int ktory);
+	std::vector <coords> getV();
+	void remove(int bomb_number);
 	void reset();
 };

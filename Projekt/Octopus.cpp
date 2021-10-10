@@ -6,21 +6,21 @@ void Octopus::show()
 }
 void Octopus::movement_bottle()
 {
-	if (wyrzucono)
+	if (is_throw_away_bottle)
 		yBottle -= 10;
 }
-void Octopus::now()
+void Octopus::throw_away_bottle()
 {
-	if (trafiony == false)
-		wyrzucono = true;
+	if (is_hit_octopus == false)
+		is_throw_away_bottle = true;
 }
-void Octopus::trafiono()
+void Octopus::hit_optocus()
 {
-	trafiony = true;
+	is_hit_octopus = true;
 }
 void Octopus::show_bottle()
 {
-	if (trafiony == false || wyrzucono == true)
+	if (is_hit_octopus == false || is_throw_away_bottle == true)
 	{
 		if (yBottle >= 143)
 		{
@@ -33,9 +33,8 @@ void Octopus::show_bottle()
 }
 void Octopus::reset()
 {
-	wyrzucono = false;
-	trafiony = false;
-	xO = 500,
-		yO = 710;			   //zeby na piasku byl
+	is_throw_away_bottle = false;
+	is_hit_octopus = false;
+	xO = 500, yO = 710;
 	yBottle = yO;
 }

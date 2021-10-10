@@ -12,25 +12,25 @@ class MainBoat : public GameObject
 private:
 	int lifes = 3;
 	ALLEGRO_BITMAP *boat = al_load_bitmap("main1.png");
-	ALLEGRO_BITMAP *boat2 = al_load_bitmap("main2.png");
-	bool dodano = false;
+	ALLEGRO_BITMAP *dead_boat = al_load_bitmap("main2.png");
+	bool added = false;
 	int  move_level = 0;
-	bool key[2] = { true,false }; //lewy, prawy
+	bool key[2] = { true,false }; //left, right
 public:
 	MainBoat();
 	MainBoat(int xx, int yy);
 	void set(int xx, int yy);
 	void show();
-	void show_Dead();
+	void show_dead();
 	void movement();
 	void life();
 	int getX();
 	int getY();
 	void add_life();
 	int getLife();
-	void utrata_zycia();
-	bool GAMEOVER();
-	void reset_NEW();
+	void lost_life();
+	bool game_over();
+	void reset_new();
 	void reset_bottle_and_move();
 	void move(bool dir);
 

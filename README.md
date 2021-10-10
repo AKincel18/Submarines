@@ -1,5 +1,5 @@
 # Submarines
-Submarines is a computer game in which the player commands a submarine. The game was written in c++ using graphical librabry Allegro5. GUI is in a Polish language.
+Submarines is a computer game in which the player commands a submarine. The game was written in c++ using graphical librabry Allegro5.
 
 ## Description
 The program was inspired by game SubmarineS 3.4 from 2008. As the producer of the game describes: destroy enemy subs before they destroy you. Explode them with slowly falling depth charges while avoiding their mines. There are several kinds of sub each with different ways of moving and shooting. 
